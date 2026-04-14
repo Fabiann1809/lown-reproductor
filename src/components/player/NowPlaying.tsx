@@ -58,9 +58,9 @@ function Turntable({ artworkUrl, artist, spinning, lifted }: TurntableProps) {
       aria-hidden="true"
     >
       <defs>
-        {/* Clip path in outer SVG coords — disc image area */}
+        {/* Clip path in LOCAL disc coords (origin = disc center after translate) */}
         <clipPath id="artwork-clip">
-          <circle cx="130" cy="130" r="48" />
+          <circle cx="0" cy="0" r="48" />
         </clipPath>
         <radialGradient id="disc-sheen" cx="38%" cy="38%" r="62%">
           <stop offset="0%"   stopColor="rgba(255,255,255,0.05)" />
