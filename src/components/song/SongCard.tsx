@@ -52,7 +52,7 @@ export function SongCard({ song, node, showRemove = false, isActive = false }: S
       <div
         className={`song-card ${isActive ? 'song-card--active' : ''}`}
         onContextMenu={handleContextMenu}
-        onDoubleClick={handlePlayNow}
+        onClick={handlePlayNow}
       >
         {song.artworkUrl ? (
           <img src={song.artworkUrl} alt={song.title} className="song-card__artwork" />
@@ -74,7 +74,7 @@ export function SongCard({ song, node, showRemove = false, isActive = false }: S
             ⋮
           </button>
           {showRemove && node && (
-            <button className="icon-btn icon-btn--danger" onClick={() => removeSong(node)} title="Eliminar">
+            <button className="icon-btn icon-btn--danger" onClick={(e) => { e.stopPropagation(); removeSong(node); }} title="Eliminar">
               ✕
             </button>
           )}
