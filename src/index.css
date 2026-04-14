@@ -82,7 +82,9 @@ input, select {
 
 .app-main {
   overflow-y: auto;
+  min-height: 0;          /* critical: lets CSS Grid children scroll */
   padding: 24px;
+  padding-bottom: 440px; /* clears the fixed player bar */
   background: var(--bg);
 }
 
@@ -199,61 +201,32 @@ input, select {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   TURNTABLE & VINYL DISC
+   TURNTABLE — unified SVG (disc + arm in one coordinate space)
    ───────────────────────────────────────────────────────────── */
 .now-playing {
   display: flex;
   flex-direction: column;
   align-items: center;
-  gap: 12px;
+  gap: 10px;
   width: 100%;
 }
 
-.turntable {
-  position: relative;
-  width: 200px;
-  height: 200px;
+.turntable-wrapper {
+  width: 260px;
   flex-shrink: 0;
+  filter: drop-shadow(0 8px 28px rgba(0, 0, 0, 0.75));
 }
 
-.turntable__disc-wrapper {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
-  overflow: hidden;
-}
-
-.vinyl-disc {
-  width: 200px;
-  height: 200px;
-  border-radius: 50%;
+.turntable-svg {
+  width: 100%;
+  height: auto;
   display: block;
-  filter: drop-shadow(0 8px 24px rgba(0,0,0,0.7));
-  transform-origin: center center;
+  overflow: visible;
 }
 
 @keyframes spin {
   from { transform: rotate(0deg); }
   to   { transform: rotate(360deg); }
-}
-
-.vinyl-disc--spinning {
-  animation: spin 3s linear infinite;
-}
-
-.turntable__arm-wrapper {
-  position: absolute;
-  top: -10px;
-  right: -40px;
-  width: 80px;
-  height: 160px;
-  pointer-events: none;
-}
-
-.tonearm {
-  width: 80px;
-  height: 160px;
-  display: block;
 }
 
 /* ─────────────────────────────────────────────────────────────
@@ -649,7 +622,6 @@ input, select {
   display: flex;
   flex-direction: column;
   gap: 16px;
-  padding-bottom: 280px;
 }
 
 .playlist-panel__header {
