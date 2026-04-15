@@ -38,7 +38,6 @@ interface TurntableProps {
 }
 
 function Turntable({ artworkUrl, artist, spinning, lifted }: TurntableProps) {
-  const grooves = Array.from({ length: 14 }, (_, i) => 115 - i * 6);
   const initials = artist.slice(0, 2).toUpperCase();
   const bgColor = colorFromString(artist);
   const armAngle = lifted ? LIFTED_ANGLE : PLAYING_ANGLE;
@@ -58,6 +57,17 @@ function Turntable({ artworkUrl, artist, spinning, lifted }: TurntableProps) {
           <stop offset="0%"   stopColor="rgba(255,255,255,0.05)" />
           <stop offset="100%" stopColor="rgba(0,0,0,0)" />
         </radialGradient>
+        <linearGradient id="arm-shine" x1="0%" y1="0%" x2="100%" y2="0%">
+          <stop offset="0%"   stopColor="#111" />
+          <stop offset="40%"  stopColor="#4a4a4a" />
+          <stop offset="60%"  stopColor="#6e6e6e" />
+          <stop offset="100%" stopColor="#1a1a1a" />
+        </linearGradient>
+        <linearGradient id="cart-shine" x1="0%" y1="0%" x2="0%" y2="100%">
+          <stop offset="0%"   stopColor="#888" />
+          <stop offset="50%"  stopColor="#555" />
+          <stop offset="100%" stopColor="#2a2a2a" />
+        </linearGradient>
       </defs>
 
       {/* ── DISC ── */}
@@ -66,14 +76,18 @@ function Turntable({ artworkUrl, artist, spinning, lifted }: TurntableProps) {
           className={spinning ? 'disc-spin' : ''}
           style={{ transformOrigin: '0px 0px' }}
         >
-          <circle cx="0" cy="0" r="118" fill="#0d0d0d" stroke="#1e1e1e" strokeWidth="1" />
+          {/* Imagen del disco — mix-blend-mode:multiply hace el fondo blanco transparente */}
+          <image
+            href="/disco.png"
+            x="-122"
+            y="-122"
+            width="244"
+            height="244"
+            preserveAspectRatio="xMidYMid meet"
+            style={{ mixBlendMode: 'multiply' }}
+          />
 
-          {grooves.map((r, i) => (
-            <circle key={i} cx="0" cy="0" r={r} fill="none" stroke="#1c1c1c" strokeWidth="1.1" />
-          ))}
-
-          <circle cx="0" cy="0" r="52" fill="#111" />
-
+          {/* Artwork de la canción sobre la etiqueta central */}
           {artworkUrl ? (
             <image
               href={artworkUrl}
@@ -100,9 +114,8 @@ function Turntable({ artworkUrl, artist, spinning, lifted }: TurntableProps) {
             </>
           )}
 
-          <circle cx="0" cy="0" r="5" fill="#060606" />
-          <circle cx="0" cy="0" r="118" fill="url(#disc-sheen)" />
-          <circle cx="0" cy="0" r="118" fill="none" stroke="rgba(201,169,110,0.07)" strokeWidth="2" />
+          {/* Punto central */}
+          <circle cx="0" cy="0" r="5" fill="#1a1a1a" />
         </g>
       </g>
 
@@ -117,20 +130,33 @@ function Turntable({ artworkUrl, artist, spinning, lifted }: TurntableProps) {
               : 'transform 1s ease-out',
           }}
         >
-          <circle cx="0" cy="0" r="13" fill="#1e1e1e" stroke="#3a3a3a" strokeWidth="1" />
-          <circle cx="0" cy="0" r="9"  fill="#C9A96E" />
-          <circle cx="0" cy="0" r="4"  fill="#111" />
+          {/* Pivot base — outer ring */}
+          <circle cx="0" cy="0" r="13" fill="#1a1a1a" stroke="#3a3a3a" strokeWidth="1.2" />
+          {/* Pivot sheen */}
+          <circle cx="0" cy="0" r="11" fill="url(#arm-shine)" opacity="0.6" />
+          {/* Pivot cap */}
+          <circle cx="0" cy="0" r="7"  fill="#222" stroke="#555" strokeWidth="0.6" />
+          <circle cx="0" cy="0" r="3"  fill="#111" />
+          <circle cx="-2" cy="-2" r="1.2" fill="rgba(255,255,255,0.25)" />
 
-          <line x1="0" y1="6" x2="-8" y2="134"
-            stroke="#C9A96E" strokeWidth="5" strokeLinecap="round" />
-          <line x1="0" y1="6" x2="-8" y2="134"
-            stroke="rgba(255,255,255,0.18)" strokeWidth="1.8" strokeLinecap="round" />
+          {/* Arm body — dark with metallic highlight */}
+          <line x1="0" y1="7" x2="-8" y2="134" stroke="url(#arm-shine)" strokeWidth="6" strokeLinecap="round" />
+          {/* Highlight stripe on arm */}
+          <line x1="-1" y1="10" x2="-9" y2="130" stroke="rgba(255,255,255,0.12)" strokeWidth="2" strokeLinecap="round" />
 
-          <rect x="-20" y="126" width="24" height="12" rx="3"
-            fill="#b89050" stroke="#8a6e3e" strokeWidth="0.8" />
-          <rect x="-16" y="136" width="14" height="7" rx="1.5" fill="#777" />
-          <line x1="-9" y1="143" x2="-9" y2="152" stroke="#bbb" strokeWidth="1.5" />
-          <circle cx="-9" cy="153" r="2.8" fill="#ddd" />
+          {/* Headshell / cartridge body */}
+          <rect x="-20" y="126" width="24" height="13" rx="3" fill="url(#cart-shine)" stroke="#3a3a3a" strokeWidth="0.8" />
+          {/* Cartridge highlight */}
+          <rect x="-18" y="127.5" width="10" height="3" rx="1" fill="rgba(255,255,255,0.15)" />
+
+          {/* Stylus mount */}
+          <rect x="-16" y="138" width="14" height="7" rx="1.5" fill="#444" stroke="#2a2a2a" strokeWidth="0.6" />
+
+          {/* Cantilever (needle rod) */}
+          <line x1="-9" y1="145" x2="-9" y2="154" stroke="#999" strokeWidth="1.5" strokeLinecap="round" />
+          {/* Stylus tip */}
+          <ellipse cx="-9" cy="155.5" rx="2.5" ry="1.8" fill="#ccc" />
+          <ellipse cx="-9.5" cy="154.8" rx="1" ry="0.6" fill="rgba(255,255,255,0.5)" />
         </g>
       </g>
     </svg>
@@ -215,7 +241,7 @@ export function NowPlaying() {
           </>
         ) : (
           <>
-            <p className="now-playing__title now-playing__title--idle">Fabify</p>
+            <p className="now-playing__title now-playing__title--idle">Lown</p>
             <p className="now-playing__artist">Selecciona una canción</p>
           </>
         )}

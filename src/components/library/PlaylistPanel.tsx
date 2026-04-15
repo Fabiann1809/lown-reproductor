@@ -56,6 +56,7 @@ export function PlaylistPanel() {
                   node={node ?? undefined}
                   showRemove
                   isActive={nowPlaying?.id === song.id}
+                  draggable
                 />
               );
             })}

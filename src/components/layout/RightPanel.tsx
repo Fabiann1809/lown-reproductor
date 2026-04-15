@@ -2,9 +2,8 @@ import { usePlayerContext } from '../../context/PlayerContext';
 import { SongCard } from '../song/SongCard';
 import { PlaylistPanel } from '../library/PlaylistPanel';
 import { HistoryView } from '../library/HistoryView';
-import { SearchPanel } from '../search/SearchPanel';
 import { formatDuration } from '../../types/song';
-import type { ActiveView } from './AppLayout';
+import type { ActiveView } from '../../context/PlayerContext';
 import type { Song } from '../../types/song';
 
 // ─── Queue info panel ────────────────────────────────────────
@@ -80,6 +79,7 @@ function QueueInfoPanel() {
                   song={song}
                   node={node ?? undefined}
                   showRemove
+                  draggable
                 />
               );
             })}
@@ -99,7 +99,6 @@ interface RightPanelProps {
 
 const VIEW_TITLES: Record<Exclude<ActiveView, 'queue'>, string> = {
   library:  'Mi playlist',
-  search:   'Buscar',
   history:  'Historial',
 };
 
@@ -131,10 +130,9 @@ export function RightPanel({ activeView, onViewChange }: RightPanelProps) {
 
       {/* Content */}
       <div className="right-panel__content">
-        {isQueue             && <QueueInfoPanel />}
-        {activeView === 'library' && <PlaylistPanel />}
-        {activeView === 'search'  && <SearchPanel />}
-        {activeView === 'history' && <HistoryView />}
+        {isQueue                   && <QueueInfoPanel />}
+        {activeView === 'library'  && <PlaylistPanel />}
+        {activeView === 'history'  && <HistoryView />}
       </div>
     </aside>
   );

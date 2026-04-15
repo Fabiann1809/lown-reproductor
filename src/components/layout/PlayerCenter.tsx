@@ -4,6 +4,7 @@ import { PlayerControls } from '../player/PlayerControls';
 import { VolumeRepeatShuffle } from '../player/VolumeRepeatShuffle';
 import { WaveformVisualizer } from '../player/WaveformVisualizer';
 import { DynamicBackground } from '../player/DynamicBackground';
+import { CenterSearch } from '../search/CenterSearch';
 
 export function PlayerCenter() {
   return (
@@ -13,6 +14,9 @@ export function PlayerCenter() {
 
       {/* z-index 1 — resplandor dorado ambiental */}
       <div className="player-center__glow" aria-hidden="true" />
+
+      {/* z-index 3 — buscador encima del tocadiscos */}
+      <CenterSearch />
 
       {/* z-index 2 — tocadiscos */}
       <div className="player-center__stage">

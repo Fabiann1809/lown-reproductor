@@ -1,10 +1,13 @@
-import { createContext, useContext, type ReactNode } from 'react';
+import { createContext, useContext, useState, useCallback, type ReactNode } from 'react';
 import { usePlayer } from '../hooks/usePlayer';
 import { usePlaylist } from '../hooks/usePlaylist';
 import { useSearch } from '../hooks/useSearch';
 import type { Song } from '../types/song';
-import type { DLLNode } from '../lib/DoublyLinkedList';
+import type { NodoCancion } from '../lib/Cola';
+import type { Cola } from '../lib/Cola';
 import type { RepeatMode } from '../hooks/usePlayer';
+
+export type ActiveView = 'queue' | 'library' | 'history';
 
 interface PlayerContextValue {
   // Player state
@@ -16,9 +19,9 @@ interface PlayerContextValue {
   repeatMode: RepeatMode;
   isShuffle: boolean;
   historyItems: Song[];
-  currentNode: React.MutableRefObject<DLLNode<Song> | null>;
+  currentNode: React.MutableRefObject<NodoCancion<Song> | null>;
   // Player actions
-  playSong: (node: DLLNode<Song>) => void;
+  playSong: (node: NodoCancion<Song>) => void;
   next: () => void;
   prev: () => void;
   togglePlay: () => void;
@@ -30,20 +33,24 @@ interface PlayerContextValue {
   // Playlist state
   songs: Song[];
   // Playlist actions
-  addToQueue: (song: Song) => DLLNode<Song>;
-  playNext: (song: Song, currentNode: DLLNode<Song> | null) => DLLNode<Song>;
-  removeSong: (node: DLLNode<Song>) => void;
+  addToQueue: (song: Song) => NodoCancion<Song>;
+  playNext: (song: Song, currentNode: NodoCancion<Song> | null) => NodoCancion<Song>;
+  removeSong: (node: NodoCancion<Song>) => void;
   shufflePlaylist: () => void;
   reversePlaylist: () => void;
   clearPlaylist: () => void;
   updateSongDuration: (songId: string, durationMs: number) => void;
-  dll: React.MutableRefObject<import('../lib/DoublyLinkedList').DoublyLinkedList<Song>>;
+  moveNode: (draggedId: string, afterId: string | null) => void;
+  dll: React.MutableRefObject<Cola<Song>>;
   // Search state
   query: string;
   setQuery: (q: string) => void;
   results: Song[];
   isLoading: boolean;
   searchError: string | null;
+  // UI state
+  activeView: ActiveView;
+  setActiveView: (view: ActiveView) => void;
 }
 
 const PlayerContext = createContext<PlayerContextValue | null>(null);
@@ -52,11 +59,30 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
   const player   = usePlayer();
   const playlist = usePlaylist();
   const search   = useSearch();
+  const [activeView, setActiveView] = useState<ActiveView>('queue');
 
   const handleToggleShuffle = () => {
+    if (!player.isShuffle) {
+      // Activar: mezclar dejando la canción actual al principio
+      playlist.shufflePlaylist(player.currentNode.current);
+    } else {
+      // Desactivar: restaurar el orden original con la canción actual primero
+      playlist.restoreOriginalOrder(player.currentNode.current);
+    }
     player.toggleShuffle();
-    if (!player.isShuffle) playlist.shufflePlaylist();
   };
+
+  const addToQueue = useCallback((song: Song): NodoCancion<Song> => {
+    const node = playlist.addToQueue(song);
+    setActiveView('queue');
+    return node;
+  }, [playlist]);
+
+  const playNext = useCallback((song: Song, currentNode: NodoCancion<Song> | null): NodoCancion<Song> => {
+    const node = playlist.playNext(song, currentNode);
+    setActiveView('queue');
+    return node;
+  }, [playlist]);
 
   const value: PlayerContextValue = {
     nowPlaying:          player.nowPlaying,
@@ -78,19 +104,22 @@ export function PlayerProvider({ children }: { children: ReactNode }) {
     cycleRepeatMode:     player.cycleRepeatMode,
     toggleShuffle:       handleToggleShuffle,
     songs:               playlist.songs,
-    addToQueue:          playlist.addToQueue,
-    playNext:            playlist.playNext,
+    addToQueue,
+    playNext,
     removeSong:          playlist.removeSong,
     shufflePlaylist:     playlist.shufflePlaylist,
     reversePlaylist:     playlist.reversePlaylist,
     clearPlaylist:       playlist.clearPlaylist,
     updateSongDuration:  playlist.updateSongDuration,
+    moveNode:            playlist.moveNode,
     dll:                 playlist.dll,
     query:               search.query,
     setQuery:            search.setQuery,
     results:             search.results,
     isLoading:           search.isLoading,
     searchError:         search.error,
+    activeView,
+    setActiveView,
   };
 
   return <PlayerContext.Provider value={value}>{children}</PlayerContext.Provider>;

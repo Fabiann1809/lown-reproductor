@@ -1,4 +1,4 @@
-export class Stack<T> {
+export class Historial<T> {
   private items: T[] = [];
 
   push(item: T): void {

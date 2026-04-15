@@ -1,14 +1,14 @@
 import { useRef, useState, useEffect, useCallback } from 'react';
-import { Stack } from '../lib/Stack';
-import type { DLLNode } from '../lib/DoublyLinkedList';
+import { Historial } from '../lib/Historial';
+import type { NodoCancion } from '../lib/Cola';
 import type { Song } from '../types/song';
 
 export type RepeatMode = 'none' | 'one' | 'all';
 
 export function usePlayer() {
   const audioRef = useRef(new Audio());
-  const history = useRef(new Stack<Song>());
-  const currentNode = useRef<DLLNode<Song> | null>(null);
+  const history = useRef(new Historial<Song>());
+  const currentNode = useRef<NodoCancion<Song> | null>(null);
 
   const [nowPlaying, setNowPlaying] = useState<Song | null>(null);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -60,7 +60,7 @@ export function usePlayer() {
     return song;
   }, []);
 
-  const playSong = useCallback((node: DLLNode<Song>) => {
+  const playSong = useCallback((node: NodoCancion<Song>) => {
     const audio = audioRef.current;
     if (currentNode.current && currentNode.current.value.id !== node.value.id) {
       pushToHistory(currentNode.current.value);
@@ -109,7 +109,7 @@ export function usePlayer() {
     }
     const dll = currentNode.current;
     if (!dll) return;
-    let cursor: DLLNode<Song> | null = currentNode.current;
+    let cursor: NodoCancion<Song> | null = currentNode.current;
     while (cursor && cursor.value.id !== previous.id) {
       cursor = cursor.prev;
     }
@@ -145,7 +145,7 @@ export function usePlayer() {
     }
 
     if (currentRepeat === 'all') {
-      const nextNode = node.next ?? (node as DLLNode<Song> & { _head?: DLLNode<Song> })._head;
+      const nextNode = node.next ?? (node as NodoCancion<Song> & { _head?: NodoCancion<Song> })._head;
       if (node.next) {
         pushToHistory(node.value);
         currentNode.current = node.next;
