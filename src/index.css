@@ -1311,3 +1311,103 @@ input, select {
 ::-webkit-scrollbar-track { background: transparent; }
 ::-webkit-scrollbar-thumb { background: var(--border); border-radius: 3px; }
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
+
+/* ─────────────────────────────────────────────────────────────
+   MOBILE NAV BAR (oculta en desktop)
+   ───────────────────────────────────────────────────────────── */
+.mobile-nav { display: none; }
+
+/* ─────────────────────────────────────────────────────────────
+   RESPONSIVE — móvil (≤ 768px)
+   ───────────────────────────────────────────────────────────── */
+@media (max-width: 768px) {
+  /* Layout: columna única con barra inferior */
+  .app-layout {
+    display: flex;
+    flex-direction: column;
+    grid-template-columns: unset;
+    height: 100dvh;
+    overflow: hidden;
+  }
+
+  /* Sidebar de escritorio: oculta */
+  .sidebar { display: none; }
+
+  /* Paneles: cada uno ocupa todo el espacio libre */
+  .player-center,
+  .right-panel {
+    flex: 1;
+    min-height: 0;
+    width: 100%;
+  }
+
+  .right-panel {
+    border-left: none;
+    border-top: 1px solid var(--border);
+  }
+
+  /* Mostrar solo el panel activo en móvil */
+  .app-layout--mobile-player .right-panel { display: none; }
+  .app-layout--mobile-panel  .player-center { display: none; }
+
+  /* Player center: ajustes de espaciado */
+  .player-center {
+    padding: 20px 16px 12px;
+    gap: 16px;
+    justify-content: space-evenly;
+  }
+
+  /* Tocadiscos un poco más pequeño */
+  .player-center .turntable-wrapper { max-width: 260px; }
+  .turntable-wrapper { width: 220px; }
+
+  /* Controles: más compactos */
+  .player-center__controls { padding: 10px 4px 8px; gap: 8px; }
+  .player-center .control-btn--play      { width: 50px; height: 50px; }
+  .player-center .control-btn--secondary { width: 36px; height: 36px; }
+  .player-center .volume-slider          { width: 70px; }
+
+  /* Barra de navegación inferior */
+  .mobile-nav {
+    display: flex;
+    flex-shrink: 0;
+    height: 60px;
+    background: var(--sidebar);
+    border-top: 1px solid var(--border);
+    align-items: stretch;
+    padding: 0 4px;
+    padding-bottom: env(safe-area-inset-bottom);
+  }
+
+  .mobile-nav__tab {
+    flex: 1;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 3px;
+    color: var(--text-muted);
+    font-size: 10px;
+    font-weight: 500;
+    border-radius: var(--radius-xs);
+    transition: color 0.15s, background 0.15s;
+    padding: 6px 4px;
+  }
+
+  .mobile-nav__tab:hover {
+    color: var(--text-secondary);
+    background: var(--surface2);
+  }
+
+  .mobile-nav__tab--active {
+    color: var(--accent);
+  }
+
+  /* Song card: mostrar acciones sin hover (touch) */
+  .song-queue-actions { opacity: 1; }
+  .song-card__actions { opacity: 1; }
+  .song-card__drag-handle { opacity: 1; }
+
+  /* Center search: ajuste de ancho */
+  .center-search { max-width: 100%; }
+}
