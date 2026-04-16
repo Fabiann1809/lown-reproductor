@@ -40,14 +40,14 @@ export function CenterSearch() {
         <input
           type="text"
           className="center-search__input"
-          placeholder="Search songs, artists..."
+          placeholder="Buscar canciones, artistas..."
           value={query}
           onChange={handleChange}
           onFocus={() => query.trim() && setIsOpen(true)}
-          aria-label="Search songs"
+          aria-label="Buscar canciones"
         />
         {query && (
-          <button className="center-search__clear" onClick={handleClear} aria-label="Clear search">
+          <button className="center-search__clear" onClick={handleClear} aria-label="Limpiar búsqueda">
             ✕
           </button>
         )}
@@ -59,7 +59,7 @@ export function CenterSearch() {
           {isLoading && (
             <div className="center-search__state">
               <div className="spinner" />
-              <span>Searching...</span>
+              <span>Buscando...</span>
             </div>
           )}
 
@@ -71,7 +71,7 @@ export function CenterSearch() {
 
           {!isLoading && !searchError && results.length === 0 && (
             <div className="center-search__state">
-              No results found for "{query}"
+              No se encontraron resultados para "{query}"
             </div>
           )}
 

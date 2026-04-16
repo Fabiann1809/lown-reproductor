@@ -12,10 +12,10 @@ export function PlaylistPanel() {
     <div className="queue-panel">
       <div className="queue-panel__header">
         <div className="queue-panel__title-row">
-          <h2 className="queue-panel__title">My playlist</h2>
+          <h2 className="queue-panel__title">Mi playlist</h2>
           {songs.length > 0 && (
             <span className="queue-panel__meta">
-              {songs.length} {songs.length === 1 ? 'song' : 'songs'}
+              {songs.length} {songs.length === 1 ? 'canción' : 'canciones'}
               {totalMs > 0 && ` · ${formatDuration(totalMs)}`}
             </span>
           )}
@@ -23,17 +23,17 @@ export function PlaylistPanel() {
 
         {songs.length > 0 && (
           <div className="queue-panel__actions">
-            <button className="text-btn" onClick={reversePlaylist} title="Reverse order">
+            <button className="text-btn" onClick={reversePlaylist} title="Invertir orden">
               <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style={{ marginRight: 4 }}>
                 <path d="M16 17.01V10h-2v7.01h-3L15 21l4-3.99h-3zM9 3 5 6.99h3V14h2V6.99h3L9 3z"/>
               </svg>
-              Reverse
+              Invertir
             </button>
-            <button className="text-btn text-btn--danger" onClick={clearPlaylist} title="Clear queue">
+            <button className="text-btn text-btn--danger" onClick={clearPlaylist} title="Limpiar fila">
               <svg viewBox="0 0 24 24" fill="currentColor" width="14" height="14" style={{ marginRight: 4 }}>
                 <path d="M6 19c0 1.1.9 2 2 2h8c1.1 0 2-.9 2-2V7H6v12zM19 4h-3.5l-1-1h-5l-1 1H5v2h14V4z"/>
               </svg>
-              Clear
+              Limpiar
             </button>
           </div>
         )}
@@ -42,8 +42,8 @@ export function PlaylistPanel() {
       <div className="queue-panel__list">
         {songs.length === 0 ? (
           <div className="empty-state">
-            <p>Your queue is empty</p>
-            <small>Search songs or upload local files</small>
+            <p>Tu fila está vacía</p>
+            <small>Busca canciones o sube archivos locales</small>
           </div>
         ) : (
           <div className="song-list">

@@ -4,7 +4,7 @@
    CSS VARIABLES — Neumorphic System
    ───────────────────────────────────────────────────────────── */
 :root {
-  /* Superficies */
+  /* Surfaces */
   --bg:       #F5F5F7;
   --sidebar:  #FAF9F7;
   --surface:  #FFFFFF;
@@ -22,15 +22,15 @@
   --accent-dim:  rgba(168,159,148,0.15);
   --accent-glow: rgba(168,159,148,0.30);
 
-  /* Progreso */
+  /* Progress */
   --progress-fill: #909090;
   --progress-bg:   #D8D8D8;
 
-  /* Estado */
+  /* Status */
   --danger: #C0392B;
 
   /* ── Neumorphic shadows ───────────────────────────────────── */
-  /* raised: elemento que sobresale de la superficie            */
+  /* raised: element protruding from surface            */
   --neu-raised:
     5px 5px 12px rgba(0,0,0,0.10),
     -5px -5px 12px rgba(255,255,255,0.85);
@@ -40,7 +40,7 @@
   --neu-raised-lg:
     8px 8px 20px rgba(0,0,0,0.11),
     -8px -8px 20px rgba(255,255,255,0.85);
-  /* inset: elemento hundido en la superficie                   */
+  /* inset: element sunken into surface                   */
   --neu-inset:
     inset 3px 3px 8px rgba(0,0,0,0.10),
     inset -3px -3px 8px rgba(255,255,255,0.85);
@@ -90,7 +90,7 @@ input, select {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   APP LAYOUT — 3 columnas
+   APP LAYOUT — 3 columns
    ───────────────────────────────────────────────────────────── */
 .app-layout {
   display: grid;
@@ -188,7 +188,7 @@ input, select {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   PLAYER CENTER — escenario principal
+   PLAYER CENTER — main stage
    ───────────────────────────────────────────────────────────── */
 .player-center {
   display: flex;
@@ -204,7 +204,7 @@ input, select {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   DYNAMIC BACKGROUND — tinte sutil del artwork
+   DYNAMIC BACKGROUND — subtle artwork tint
    Very subtle to preserve the neumorphic style
    ───────────────────────────────────────────────────────────── */
 .dyn-bg {
@@ -273,7 +273,7 @@ input, select {
   z-index: 1;
 }
 
-/* Tocadiscos */
+/* Turntable */
 .player-center .turntable-wrapper {
   width: 100%;
   max-width: 340px;
@@ -326,7 +326,7 @@ input, select {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   BARRA DE CONTROLES — layout Spotify
+   CONTROL BAR — Spotify layout
    ───────────────────────────────────────────────────────────── */
 .player-center__controls {
   display: flex;
@@ -339,7 +339,7 @@ input, select {
   padding: 20px 8px 16px;
 }
 
-/* Fila horizontal: [spacer izq] [5 botones] [volumen der] */
+/* Horizontal row: [left spacer] [5 buttons] [right volume] */
 .player-center__ctrl-row {
   display: flex;
   align-items: center;
@@ -347,7 +347,7 @@ input, select {
   gap: 8px;
 }
 
-/* Los dos laterales se expanden igual para centrar los botones */
+/* Both sides expand equally to center buttons */
 .player-center__ctrl-side {
   flex: 1;
   display: flex;
@@ -649,7 +649,7 @@ input, select {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   TURNTABLE — SVG animado
+   TURNTABLE — animated SVG
    ───────────────────────────────────────────────────────────── */
 .now-playing {
   display: flex;
@@ -833,7 +833,7 @@ input, select {
 }
 
 /* ─────────────────────────────────────────────────────────────
-   VOLUME + MODO
+   VOLUME + MODE
    ───────────────────────────────────────────────────────────── */
 .volume-controls {
   display: flex;
@@ -942,7 +942,7 @@ input, select {
 .search-bar__clear:hover { color: var(--text); }
 
 /* ─────────────────────────────────────────────────────────────
-   CENTER SEARCH — buscador encima del tocadiscos
+   CENTER SEARCH — search above turntable
    ───────────────────────────────────────────────────────────── */
 .center-search {
   position: relative;
@@ -1136,7 +1136,7 @@ input, select {
   flex-shrink: 0;
 }
 
-/* Acciones en hover de song card */
+/* Actions on song card hover */
 .song-queue-actions {
   display: flex;
   gap: 4px;
@@ -1317,7 +1317,7 @@ input, select {
 ::-webkit-scrollbar-thumb:hover { background: var(--text-muted); }
 
 /* ─────────────────────────────────────────────────────────────
-   MOBILE NAV BAR (oculta en desktop)
+   MOBILE NAV BAR (hidden on desktop)
    ───────────────────────────────────────────────────────────── */
 .mobile-nav { display: none; }
 
@@ -1334,10 +1334,10 @@ input, select {
     overflow: hidden;
   }
 
-  /* Sidebar de escritorio: oculta */
+  /* Desktop sidebar: hidden */
   .sidebar { display: none; }
 
-  /* Paneles: cada uno ocupa todo el espacio libre */
+  /* Panels: each takes up all free space */
   .player-center,
   .right-panel {
     flex: 1;
@@ -1354,7 +1354,7 @@ input, select {
   .app-layout--mobile-player .right-panel { display: none; }
   .app-layout--mobile-panel  .player-center { display: none; }
 
-  /* Player center: ajustes de espaciado */
+  /* Player center: spacing adjustments */
   .player-center {
     padding: 20px 16px 12px;
     gap: 16px;
@@ -1407,11 +1407,11 @@ input, select {
     color: var(--accent);
   }
 
-  /* Song card: mostrar acciones sin hover (touch) */
+  /* Song card: show actions without hover (touch) */
   .song-queue-actions { opacity: 1; }
   .song-card__actions { opacity: 1; }
   .song-card__drag-handle { opacity: 1; }
 
-  /* Center search: ajuste de ancho */
+  /* Center search: width adjustment */
   .center-search { max-width: 100%; }
 }

@@ -242,7 +242,7 @@ export function NowPlaying() {
         ) : (
           <>
             <p className="now-playing__title now-playing__title--idle">Lown</p>
-            <p className="now-playing__artist">Select a song</p>
+            <p className="now-playing__artist">Selecciona una canción</p>
           </>
         )}
       </div>

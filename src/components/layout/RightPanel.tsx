@@ -46,18 +46,18 @@ function QueueInfoPanel() {
     <div className="queue-info">
       {/* Now playing */}
       <section className="queue-section">
-        <p className="queue-section__label">NOW PLAYING</p>
+        <p className="queue-section__label">REPRODUCIENDO AHORA</p>
         {nowPlaying ? (
           <NowPlayingCard song={nowPlaying} />
         ) : (
-          <p className="queue-section__empty">Select a song to start</p>
+          <p className="queue-section__empty">Selecciona una canción para empezar</p>
         )}
       </section>
 
       {/* Up next */}
       <section className="queue-section queue-section--scrollable">
         <p className="queue-section__label">
-          UP NEXT
+          A CONTINUACIÓN
           {upcomingSongs.length > 0 && (
             <span className="queue-section__count"> · {upcomingSongs.length}</span>
           )}
@@ -66,8 +66,8 @@ function QueueInfoPanel() {
         {upcomingSongs.length === 0 ? (
           <p className="queue-section__empty">
             {songs.length === 0
-              ? 'Add songs to your playlist'
-              : 'No more songs in queue'}
+              ? 'Añade canciones a tu lista'
+              : 'No hay más canciones en la fila'}
           </p>
         ) : (
           <div className="song-list">
@@ -90,7 +90,7 @@ function QueueInfoPanel() {
         {pastSongs.length > 0 && (
           <>
             <p className="queue-section__label queue-section__label--muted" style={{ marginTop: '1rem' }}>
-              ALREADY PLAYED
+              YA REPRODUCIDAS
               <span className="queue-section__count"> · {pastSongs.length}</span>
             </p>
             <div className="song-list song-list--played">
@@ -120,8 +120,8 @@ interface RightPanelProps {
 }
 
 const VIEW_TITLES: Record<Exclude<ActiveView, 'queue'>, string> = {
-  library:  'My playlist',
-  history:  'History',
+  library:  'Mi playlist',
+  history:  'Historial',
 };
 
 export function RightPanel({ activeView, onViewChange }: RightPanelProps) {
@@ -132,19 +132,19 @@ export function RightPanel({ activeView, onViewChange }: RightPanelProps) {
       {/* Header */}
       <div className="right-panel__header">
         {isQueue ? (
-          <h2 className="right-panel__title">Playback queue</h2>
+          <h2 className="right-panel__title">Fila de reproducción</h2>
         ) : (
           <>
             <h2 className="right-panel__title">{VIEW_TITLES[activeView]}</h2>
             <button
               className="right-panel__back"
               onClick={() => onViewChange('queue')}
-              title="Back to queue"
+              title="Volver a la fila"
             >
               <svg viewBox="0 0 24 24" fill="currentColor" width="16" height="16">
                 <path d="M20 11H7.83l5.59-5.59L12 4l-8 8 8 8 1.41-1.41L7.83 13H20v-2z"/>
               </svg>
-              Queue
+              Fila
             </button>
           </>
         )}

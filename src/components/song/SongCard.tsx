@@ -157,7 +157,7 @@ export function SongCard({
         {draggable && node && (
           <span
             className="song-card__drag-handle"
-            title="Drag to move"
+            title="Arrastrar para mover"
             onClick={(e) => e.stopPropagation()}
           >
             ⠿
@@ -186,23 +186,23 @@ export function SongCard({
 
         {showQueueActions ? (
           <div className="song-queue-actions">
-            <button className="queue-action-btn" onClick={handlePlayNext} title="Play next">
-              Next
+            <button className="queue-action-btn" onClick={handlePlayNext} title="Reproducir siguiente">
+              Siguiente
             </button>
-            <button className="queue-action-btn" onClick={handleAddToQueue} title="Add to end">
-              End
+            <button className="queue-action-btn" onClick={handleAddToQueue} title="Añadir al final">
+              Final
             </button>
           </div>
         ) : (
           <div className="song-card__actions">
-            <button className="icon-btn" onClick={handleMenuButton} title="Options">
+            <button className="icon-btn" onClick={handleMenuButton} title="Opciones">
               ⋮
             </button>
             {showRemove && node && (
               <button
                 className="icon-btn icon-btn--danger"
                 onClick={(e) => { e.stopPropagation(); removeSong(node); }}
-                title="Remove"
+                title="Eliminar"
               >
                 ✕
               </button>

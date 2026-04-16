@@ -30,7 +30,7 @@ export function PlayerControls() {
       <button
         className={`mode-btn ${isShuffle ? 'mode-btn--active' : ''}`}
         onClick={toggleShuffle}
-        title="Shuffle"
+        title="Aleatorio"
       >
         <svg viewBox="0 0 24 24" fill="currentColor" width="18" height="18">
           <path d="M10.59 9.17 5.41 4 4 5.41l5.17 5.17 1.42-1.41zM14.5 4l2.04 2.04L4 18.59 5.41 20 17.96 7.46 20 9.5V4h-5.5zm.33 9.41-1.41 1.41 3.13 3.13L14.5 20H20v-5.5l-2.04 2.04-3.13-3.13z"/>
@@ -42,7 +42,7 @@ export function PlayerControls() {
         className="control-btn control-btn--secondary"
         onClick={prev}
         disabled={disabled}
-        title="Previous"
+        title="Anterior"
       >
         <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
           <path d="M6 6h2v12H6zm3.5 6 8.5 6V6z"/>
@@ -54,7 +54,7 @@ export function PlayerControls() {
         className="control-btn control-btn--play"
         onClick={togglePlay}
         disabled={disabled}
-        title={isPlaying ? 'Pause' : 'Play'}
+        title={isPlaying ? 'Pausa' : 'Reproducir'}
       >
         {isPlaying ? (
           <svg viewBox="0 0 24 24" fill="currentColor" width="28" height="28">
@@ -72,7 +72,7 @@ export function PlayerControls() {
         className="control-btn control-btn--secondary"
         onClick={next}
         disabled={disabled}
-        title="Next"
+        title="Siguiente"
       >
         <svg viewBox="0 0 24 24" fill="currentColor" width="22" height="22">
           <path d="M6 18l8.5-6L6 6v12zm2.5-6 5.5 3.9V8.1L8.5 12zM16 6h2v12h-2z"/>
@@ -83,7 +83,7 @@ export function PlayerControls() {
       <button
         className={`mode-btn ${repeatMode !== 'none' ? 'mode-btn--active' : ''}`}
         onClick={cycleRepeatMode}
-        title={repeatMode === 'none' ? 'Repeat all' : repeatMode === 'all' ? 'Repeat one' : 'No repeat'}
+        title={repeatMode === 'none' ? 'Repetir todo' : repeatMode === 'all' ? 'Repetir una' : 'Sin repetición'}
       >
         <RepeatIcon mode={repeatMode} />
       </button>
